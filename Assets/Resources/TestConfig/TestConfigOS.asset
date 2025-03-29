@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e411d0d962ed4e34a8737b631ba0e7be, type: 3}
+  m_Name: TestConfigOS
+  m_EditorClassIdentifier: 
+  boardDic:
+    _list:
+    - key: Girl001_board_1
+      value: {fileID: 5822561240418750691, guid: 6d2ed563c08cc6a41a7c077675c2746a, type: 3}
+    - key: Girl001_board_2
+      value: {fileID: 5822561240418750691, guid: 6d2ed563c08cc6a41a7c077675c2746a, type: 3}
