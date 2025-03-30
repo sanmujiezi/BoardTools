@@ -1,7 +1,6 @@
 using System;
 using DefaultNamespace;
 using GirlBoardEditor.Config;
-using GirlBoardEditor.Model;
 using GirlBoardEditor.Tools;
 using UnityEditor;
 using UnityEngine;

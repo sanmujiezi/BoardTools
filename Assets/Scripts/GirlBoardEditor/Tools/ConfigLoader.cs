@@ -6,7 +6,7 @@ using UnityEngine;
 using GirlBoardUtility = GirlBoardEditor.Tools.GirlBoardUtility;
 using PathDefine = GirlBoardEditor.Tools.PathDefine;
 
-namespace GirlBoardEditor.Model
+namespace GirlBoardEditor.Tools
 {
     public class ConfigLoader : BaseLoader
     {

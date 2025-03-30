@@ -3,12 +3,12 @@ using GirlBoardEditor.Config;
 using GirlBoardEditor.Tools;
 using UnityEngine;
 
-namespace GirlBoardEditor.Model
+namespace GirlBoardEditor.Tools
 {
-    public class BoardPrefabEditorModel
+    public class BoardPrefabCreator
     {
-        private static BoardPrefabEditorModel _instance = new BoardPrefabEditorModel();
-        public static BoardPrefabEditorModel Instance => _instance;
+        private static BoardPrefabCreator _instance = new BoardPrefabCreator();
+        public static BoardPrefabCreator Instance => _instance;
 
         private List<GameObject> _prefabs = new();
         public List<GameObject> prefabs => _prefabs;

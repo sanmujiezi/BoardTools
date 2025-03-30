@@ -4,7 +4,7 @@ using GirlBoardEditor.Tools;
 using UnityEngine;
 using Object = System.Object;
 
-namespace GirlBoardEditor.Model
+namespace GirlBoardEditor.Tools
 {
     public abstract class BaseLoader : Object, ICanLoadResourceFromPath
     {

@@ -13,5 +13,8 @@ namespace GirlBoardEditor.Tools
         public static string DicValueName = "m_values";
         public static string ConfigPath = "Assets/Scripts/GirlBoardEditor/Config/ToolConfig.asset";
 
+        public static string EditorMainUxml = "Assets/Scripts/GirlBoardEditor/UI/UIToolkitTest.uxml";
+        public static string EditorMainUss = "Assets/Scripts/GirlBoardEditor/UI/UIToolkitTest.uss";
+        public static string EditorGirlItemUxml = "Assets/Scripts/GirlBoardEditor/UI/LeftContentListItem.uxml";
     }
 }

@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace GirlBoardEditor.Model
+namespace GirlBoardEditor.Tools
 {
     public class PrefabLoader : BaseLoader
     {
