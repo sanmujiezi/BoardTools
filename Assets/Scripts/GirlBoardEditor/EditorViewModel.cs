@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using GirlBoardEditor.Model;
-using GirlBoardEditor.Tools;
-using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace GirlBoardEditor
@@ -18,26 +15,23 @@ namespace GirlBoardEditor
     public class EditorViewModel : BaseViewModel,ISelectedGirl
     {
         public event DelegateGirlChanged OnSelectGirl; 
-        private VisualElement root;
 
-        private GirlDetailViewModel girlDetail;
-        private GirlInfoListViewModel girlList;
+        private GirlDetailViewModel m_GirlDetail;
+        private GirlInfoListViewModel m_GirlList;
         
-        private List<GirlInfo> _girlInfos = new ();
-        public List<GirlInfo> GirlInfos => _girlInfos;
+        private List<GirlInfo> m_GirlInfos = new ();
+        public List<GirlInfo> MGirlInfos => m_GirlInfos;
         
         public EditorViewModel(VisualElement root) : base(root)
         {
-            girlDetail = new GirlDetailViewModel(root,this);
-            girlList = new GirlInfoListViewModel(root,this);
+            m_GirlDetail = new GirlDetailViewModel(root,this);
+            m_GirlList = new GirlInfoListViewModel(root,this);
         }
-
 
         public void OnSelectedGirl(GirlInfo girlInfo)
         {
             OnSelectGirl?.Invoke(girlInfo);
         }
-
 
         public void AddListener(DelegateGirlChanged action)
         {

@@ -104,18 +104,18 @@ namespace GirlBoardEditor
                 girlData.ClearData();
             }
 
-            girlData = LoadGirlDataByInfo(girlInfo);
+            girlData = LoadGirlDataByInfo(girlInfo.path);
             girlTitle.text = girlInfo.id;
         }
 
-        private GirlData LoadGirlDataByInfo(GirlInfo info)
+        private GirlData LoadGirlDataByInfo(string path)
         {
             GirlData girlData = new GirlData();
 
-            var girlImagesPath = info.path + "/" + PathDefine.GirlImagePath;
-            var boardImagesPath = info.path + "/" + PathDefine.GirlBoardImagePath;
-            var chatImagsPath = info.path + "/" + PathDefine.GirlChatImagePath;
-            var boardPrefabsPath = info.path + "/" + PathDefine.GirlBoardPrefabPath;
+            var girlImagesPath = path + "/" + PathDefine.GirlImagePath;
+            var boardImagesPath = path + "/" + PathDefine.GirlBoardImagePath;
+            var chatImagsPath = path + "/" + PathDefine.GirlChatImagePath;
+            var boardPrefabsPath = path + "/" + PathDefine.GirlBoardPrefabPath;
 
             if (Directory.Exists(girlImagesPath + "/"))
             {
