@@ -1,5 +1,6 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Scripts/UIToolkitTest/Uss/UIToolkitTest.uss?fileID=7433441132597879392&amp;guid=03d6279ff90336f4fb3cd28a46a23baf&amp;type=3#UIToolkitTest" />
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="RightContentRightPrefab" src="project://database/Assets/Scripts/GirlBoardEditor/UI/RightContentRightPrefab.uxml?fileID=9197481963319205126&amp;guid=b16b84d446f5c664c96c36d7af858d73&amp;type=3#RightContentRightPrefab" />
+    <Style src="project://database/Assets/Scripts/GirlBoardEditor/UI/UIToolkitTest.uss?fileID=7433441132597879392&amp;guid=03d6279ff90336f4fb3cd28a46a23baf&amp;type=3#UIToolkitTest" />
     <ui:VisualElement name="main" style="flex-grow: 1; background-color: rgba(120, 64, 64, 0); position: relative; flex-direction: row;">
         <SplitView fixed-pane-initial-dimension="300" orientation="Horizontal">
             <ui:VisualElement name="left" style="flex-grow: 1; width: 350px; flex-shrink: 1; max-width: none; height: auto; position: relative; min-width: 300px; background-color: rgb(77, 77, 77);">
@@ -8,10 +9,38 @@
                     <ui:VisualElement name="left_Line" style="flex-grow: 1; height: 5px; min-height: 1px; max-height: 1px; background-color: rgb(151, 151, 151); margin-top: 0; margin-right: 5px; margin-left: 5px;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="left_Content" style="flex-grow: 1; margin-top: 10px; background-color: rgb(56, 56, 56); border-left-color: rgb(56, 56, 56); border-right-color: rgb(56, 56, 56); border-top-color: rgb(56, 56, 56); border-bottom-color: rgb(56, 56, 56); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; margin-right: 5px; margin-bottom: 10px; margin-left: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
-                    <ui:ListView name="content_list" style="flex-grow: 1; transform-origin: top; opacity: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                    <ui:ListView name="content_list" style="flex-grow: 1; transform-origin: top; opacity: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(56, 56, 56);" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="right" style="flex-grow: 1; flex-shrink: 1; flex-basis: auto;" />
+            <ui:VisualElement name="right" style="flex-grow: 1; flex-shrink: 1; flex-basis: auto;">
+                <ui:VisualElement name="right_MainView" style="flex-grow: 1; background-color: rgb(77, 77, 77); white-space: nowrap; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                    <ui:VisualElement name="right_Top" style="flex-grow: 0; height: 70px; background-color: rgb(77, 77, 77);" />
+                    <ui:VisualElement name="right_Content" style="flex-grow: 1; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; background-color: rgb(62, 62, 62); border-left-color: rgb(77, 77, 77); border-right-color: rgb(77, 77, 77); border-top-color: rgb(77, 77, 77); border-bottom-color: rgb(77, 77, 77); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; align-items: flex-start; justify-content: flex-start; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; white-space: nowrap; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0;">
+                        <ui:VisualElement name="right_Content_Top" style="flex-grow: 0; flex-direction: row; height: 50px; white-space: nowrap;">
+                            <ui:VisualElement style="flex-grow: 0; height: 50px; width: 70px;">
+                                <ui:Label tabindex="-1" text="Girl001" parse-escape-sequences="true" display-tooltip-when-elided="true" name="right_girlId" style="-unity-text-outline-color: rgba(196, 196, 196, 0); color: rgb(196, 196, 196); -unity-font-style: normal; font-size: 20px;" />
+                                <ui:VisualElement name="VisualElement" style="flex-grow: 0; height: 1px; border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); background-color: rgb(255, 255, 255); margin-top: 5px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-grow: 0; height: 50px; flex-direction: row; flex-wrap: nowrap; font-size: 14px; width: auto; max-height: 100px; justify-content: flex-end; align-items: center; margin-left: 10px;">
+                                <uie:ObjectField allow-scene-objects="false" type="UnityEngine.Object, UnityEngine.CoreModule" tooltip="fsfsf" focusable="true" name="right_boardImage_field" style="width: 100px; height: 20px;" />
+                                <uie:ObjectField allow-scene-objects="false" type="UnityEngine.Object, UnityEngine.CoreModule" tooltip="fsfsf" focusable="true" name="right_boardPrefab_field" style="height: 20px; width: 100px;" />
+                                <uie:ObjectField allow-scene-objects="false" type="UnityEngine.Object, UnityEngine.CoreModule" tooltip="fsfsf" focusable="true" name="right_girlImage_field" style="width: 100px; height: 20px;" />
+                                <uie:ObjectField allow-scene-objects="false" type="UnityEngine.Object, UnityEngine.CoreModule" tooltip="fsfsf" focusable="true" name="right_chatImage_field" style="height: 20px; width: 100px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <SplitView fixed-pane-initial-dimension="200" style="width: auto; position: absolute; left: 0; top: 50px; right: 0; bottom: 0; margin-right: 0; margin-left: 0;">
+                            <ui:VisualElement name="right_content_left" style="flex-grow: 0; flex-direction: column; width: 250px; background-color: rgba(196, 196, 196, 0);">
+                                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="right_content_left_detailState" focusable="true" style="height: 30px;" />
+                                <ui:ListView name="right_content_left_list" style="flex-grow: 1; background-color: rgb(56, 56, 56); border-left-color: rgb(56, 56, 56); border-right-color: rgb(56, 56, 56); border-top-color: rgb(56, 56, 56); border-bottom-color: rgb(56, 56, 56); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="right_content_right" style="flex-grow: 1; flex-basis: auto; flex-shrink: 1; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                                <ui:Instance template="RightContentRightPrefab" name="RightContentRightPrefab" />
+                            </ui:VisualElement>
+                        </SplitView>
+                        <ui:VisualElement name="right_Mask" pickable="false" picking-mode="Ignore" focusable="false" style="flex-grow: 1; position: absolute; left: -5px; top: -5px; right: -5px; bottom: -5px; border-left-color: rgb(77, 77, 77); border-right-color: rgb(77, 77, 77); border-top-color: rgb(77, 77, 77); border-bottom-color: rgb(77, 77, 77); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 10px; border-left-width: 5px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
         </SplitView>
     </ui:VisualElement>
 </ui:UXML>

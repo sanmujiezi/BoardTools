@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GirlBoardEditor;
 using GirlBoardEditor.Model;
 using GirlBoardEditor.Tools;
 using GirlBoardEditor.UICompontent;
@@ -36,6 +37,7 @@ public class EditorMainWindow : EditorWindow
         root.style.flexGrow = 1;
 
         editorViewModel = new EditorViewModel(root);
+        
     }
 
   

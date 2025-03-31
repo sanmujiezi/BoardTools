@@ -11,10 +11,13 @@ namespace GirlBoardEditor
 {
     public class GirlInfoListViewModel : BaseViewModel
     {
+        private BaseViewModel parent;
+            
         private List<GirlInfo> _girlListItem = new ();
         public List<GirlInfo> girlListItem => _girlListItem;
-        public GirlInfoListViewModel(VisualElement root) : base(root)
+        public GirlInfoListViewModel(VisualElement root,BaseViewModel parent) : base(root)
         {
+            this.parent = parent;   
             LoadGrils();
             BindingGirlList();
         }
@@ -69,11 +72,15 @@ namespace GirlBoardEditor
                     if (VARIABLE is GirlInfo girlInfo)
                     {
                         Debug.Log(girlInfo.id);
+                        var _parent = parent as ISelectedGirl;
+                        if (_parent!=null)
+                        {
+                            _parent.OnSelectedGirl(girlInfo);
+                        }
                     }
                 }
             };
         }
-
 
         private void BindingGirlList(VisualElement item, GirlInfo info)
         {
@@ -88,5 +95,6 @@ namespace GirlBoardEditor
             girlID.text = info.id;
             describe.text = info.describe;
         }
+
     }
 }

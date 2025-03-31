@@ -1,11 +1,12 @@
-﻿using UnityEngine.UIElements;
+﻿using GirlBoardEditor.Model;
+using UnityEngine.UIElements;
 
-namespace GirlBoardEditor.UICompontent
+namespace GirlBoardEditor
 {
     public abstract class BaseViewModel
     {
         protected VisualElement root;
-
+       
         public BaseViewModel(VisualElement root)
         {
             this.root = root;
