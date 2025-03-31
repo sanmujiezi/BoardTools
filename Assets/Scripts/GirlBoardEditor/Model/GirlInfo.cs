@@ -20,5 +20,13 @@ namespace GirlBoardEditor.Model
         public List<Texture2D> girlImage;
         public List<Texture2D> boardImage;
         public List<GameObject>boardPrefab;
+
+        public void ClearData()
+        {
+            chatImage.Clear();
+            girlImage.Clear();
+            boardImage.Clear();
+            boardPrefab.Clear();
+        }
     }
 }

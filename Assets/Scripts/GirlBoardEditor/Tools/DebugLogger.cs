@@ -26,6 +26,11 @@ namespace GirlBoardEditor.Tools
         {
             Debug.Log(sender.GetType().FullName + " || Send Message:" + log);
         }
+
+        public void LogError(Object sender, string log)
+        {
+            Debug.Log(sender.GetType().FullName + " || Error Message:" + log);
+        }
         
     }
 }

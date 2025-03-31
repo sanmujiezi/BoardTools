@@ -37,8 +37,16 @@ public class EditorMainWindow : EditorWindow
         root.style.flexGrow = 1;
 
         editorViewModel = new EditorViewModel(root);
-        
     }
 
-  
+    public void OnEnable()
+    {
+        GlobalEventer.Instance.OnEnable();
+    }
+
+    public void OnDisable()
+    {
+        GlobalEventer.Instance.OnDisable();
+    }
+    
 }
