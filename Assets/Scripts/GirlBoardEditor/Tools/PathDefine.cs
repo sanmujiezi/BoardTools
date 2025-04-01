@@ -10,6 +10,7 @@ namespace GirlBoardEditor.Tools
         public static string GirlBoardImagePath = "BoardImage";
         public static string GirlBoardPrefabPath = "BoardPrefab";
         public static string GirlChatImagePath = "ChatImage";
+        public static string GirlCommonImagePath = "Common";
         public static string GirlImagePath = "Image";
         public static string GirlFgImagePostFix = "_fg_";
         public static string BoardDataDicName = "boardPrefabDict";

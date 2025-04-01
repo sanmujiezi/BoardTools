@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace GirlBoardEditor.Model
 {
-    public class GirlInfo
+    public abstract class BaseModel{}
+    public class GirlInfoModel : BaseModel
     {
         public string id;
         public string describe;
@@ -13,7 +14,7 @@ namespace GirlBoardEditor.Model
         public Texture2D halfImage;
     }
 
-    public class GirlData
+    public class GirlDataModel : BaseModel 
     {
         public string id;
         public List<Texture2D> chatImage;

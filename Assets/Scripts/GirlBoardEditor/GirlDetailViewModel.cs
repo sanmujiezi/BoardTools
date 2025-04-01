@@ -32,9 +32,9 @@ namespace GirlBoardEditor
         private DropdownField selectedState;
         private ListView list;
 
-        private GirlData girlData;
+        private GirlDataModel m_GirlDataModel;
 
-        public GirlDetailViewModel(VisualElement root, BaseViewModel parent) : base(root)
+        public GirlDetailViewModel(VisualElement root, BaseViewModel parent,BaseModel model) : base(root,model)
         {
             this.parent = parent;
             BindingData();
@@ -44,14 +44,14 @@ namespace GirlBoardEditor
 
         private void BindingData()
         {
-            detailView = root.Q<VisualElement>("right_content_right");
-            girlTitle = root.Q<Label>("right_girlId");
-            boardImage = root.Q<ObjectField>("right_boardImage_field");
-            boardPrefab = root.Q<ObjectField>("right_boardPrefab_field");
-            chatImage = root.Q<ObjectField>("right_girlImage_field");
-            girlImage = root.Q<ObjectField>("right_chatImage_field");
-            selectedState = root.Q<DropdownField>("right_content_left_detailState");
-            list = root.Q<ListView>("right_content_left_list");
+            detailView = Root.Q<VisualElement>("right_content_right");
+            girlTitle = Root.Q<Label>("right_girlId");
+            boardImage = Root.Q<ObjectField>("right_boardImage_field");
+            boardPrefab = Root.Q<ObjectField>("right_boardPrefab_field");
+            chatImage = Root.Q<ObjectField>("right_girlImage_field");
+            girlImage = Root.Q<ObjectField>("right_chatImage_field");
+            selectedState = Root.Q<DropdownField>("right_content_left_detailState");
+            list = Root.Q<ListView>("right_content_left_list");
         }
 
         private void InitCompontent()
@@ -90,27 +90,28 @@ namespace GirlBoardEditor
             }
         }
 
-        public void RefreshView(GirlInfo girlInfo = null)
+        public void RefreshView(GirlInfoModel girlInfoModel = null)
         {
-            if (girlInfo == null)
+            if (girlInfoModel == null)
             {
                 return;
             }
 
-            DebugLogger.Instance.Log(this, $"RefreshView {girlInfo.id}");
+            DebugLogger.Instance.Log(this, $"RefreshView {girlInfoModel.id}");
 
-            if (girlData != null)
+            if (m_GirlDataModel != null)
             {
-                girlData.ClearData();
+                m_GirlDataModel.ClearData();
             }
 
-            girlData = LoadGirlDataByInfo(girlInfo.path);
-            girlTitle.text = girlInfo.id;
+            m_GirlDataModel = LoadGirlDataByInfo(girlInfoModel.path);
+            m_GirlDataModel.id = girlInfoModel.id;
+            girlTitle.text = girlInfoModel.id;
         }
 
-        private GirlData LoadGirlDataByInfo(string path)
+        private GirlDataModel LoadGirlDataByInfo(string path)
         {
-            GirlData girlData = new GirlData();
+            GirlDataModel girlDataModel = new GirlDataModel();
 
             var girlImagesPath = path + "/" + PathDefine.GirlImagePath;
             var boardImagesPath = path + "/" + PathDefine.GirlBoardImagePath;
@@ -162,14 +163,13 @@ namespace GirlBoardEditor
             var boardImages = new ImageLoader(boardImagesPath + "/");
             var chatImages = new ImageLoader(chatImagsPath + "/");
             var boardPrefabs = new PrefabsLoader(boardPrefabsPath + "/");
+            
+            girlDataModel.girlImage = girlImages.images;
+            girlDataModel.boardImage = boardImages.images;
+            girlDataModel.chatImage = chatImages.images;
+            girlDataModel.boardPrefab = boardPrefabs.prefabs;
 
-            girlData.id = info.id;
-            girlData.girlImage = girlImages.images;
-            girlData.boardImage = boardImages.images;
-            girlData.chatImage = chatImages.images;
-            girlData.boardPrefab = boardPrefabs.prefabs;
-
-            return girlData;
+            return girlDataModel;
         }
     }
 }

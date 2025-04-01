@@ -14,7 +14,7 @@ public class EditorMainWindow : EditorWindow
 {
     [SerializeField] private VisualTreeAsset m_VisualTreeAsset;
     private TemplateContainer labelFromUXML;
-    private List<GirlInfo> girlListItem = new();
+    private List<GirlInfoModel> girlListItem = new();
 
     private VisualElement root;
     private EditorViewModel editorViewModel;
@@ -36,7 +36,7 @@ public class EditorMainWindow : EditorWindow
         rootVisualElement.Add(root);
         root.style.flexGrow = 1;
 
-        editorViewModel = new EditorViewModel(root);
+        editorViewModel = new EditorViewModel(root,null);
     }
 
     public void OnEnable()

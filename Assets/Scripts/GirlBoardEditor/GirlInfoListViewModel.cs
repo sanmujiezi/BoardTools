@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using GirlBoardEditor.Model;
 using GirlBoardEditor.Tools;
 using GirlBoardEditor.UICompontent;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,20 +17,23 @@ namespace GirlBoardEditor
     {
         private BaseViewModel parent;
 
-        private List<GirlInfo> _girlLists = new();
-        public List<GirlInfo> GirlLists => _girlLists;
+        private List<GirlInfoModel> m_girlLists = new();
+        public List<GirlInfoModel> MGirlLists => m_girlLists;
 
-        public GirlInfoListViewModel(VisualElement root, BaseViewModel parent) : base(root)
+        private Dictionary<string, Texture2D> m_girlCommonImage = new();
+        public Dictionary<string, Texture2D> MGirlCommonImage => m_girlCommonImage;
+
+        public GirlInfoListViewModel(VisualElement root, BaseViewModel parent, BaseModel model) : base(root, model)
         {
             this.parent = parent;
             LoadGrils();
             BindingGirlList();
-            
         }
 
         public void LoadGrils()
         {
             DebugLogger.Instance.Log(this, "in Loading Grils ...");
+
 
             var girlPath = PathDefine.GirlPath + "/";
             if (Directory.Exists(girlPath))
@@ -35,31 +41,67 @@ namespace GirlBoardEditor
                 var girlPaths = Directory.GetDirectories(girlPath);
                 foreach (var girlPathItem in girlPaths)
                 {
-                    var girlInfo = new GirlInfo();
+                    string fileName = Path.GetFileNameWithoutExtension(girlPathItem);
 
-                    girlInfo.id = Path.GetFileNameWithoutExtension(girlPathItem);
+                    if (fileName.Equals(PathDefine.GirlCommonImagePath))
+                    {
+                        if (m_girlLists.Count > 0)
+                        {
+                            m_girlLists.Clear();
+                        }
+
+                        var commonPath = girlPathItem + "/";
+                        foreach (var itemPath in Directory.GetFiles(commonPath))
+                        {
+                            var image = AssetDatabase.LoadAssetAtPath<Texture2D>(itemPath);
+                            if (image && !m_girlCommonImage.ContainsKey(image.name))
+                            {
+                                m_girlCommonImage.Add(image.name, image);
+                            }
+                        }
+
+                        continue;
+                    }
+
+                    if (!fileName.Contains("Girl"))
+                    {
+                        continue;
+                    }
+
+                    var girlInfo = new GirlInfoModel();
+                    girlInfo.id = fileName;
                     girlInfo.path = girlPathItem;
                     girlInfo.describe = "This is " + girlInfo.id;
-
-                    var halfImagePath = girlPathItem + "/" + PathDefine.GirlChatImagePath + "/";
-
-                    //TODO: 这里要修改头像的加载路径
-                    var headImagePath = girlPathItem + "/" + PathDefine.GirlChatImagePath + "/";
-                    if (Directory.Exists(halfImagePath))
+                    
+                    
+                    
+                    //TODO:得到编号
+                    var match = Regex.Match(fileName, @"\d+");
+                    int index = 1;
+                    try
                     {
-                        halfImagePath = Directory.GetFiles(halfImagePath)[0];
+                        index = int.Parse(match.Groups[0].Value);
+                    }
+                    catch (FormatException e)
+                    {
+                        DebugLogger.Instance.LogError(this, $"GirlID convert fialed \"{fileName}\"");
+                        throw;
                     }
 
-                    if (Directory.Exists(headImagePath))
+                    var halfImageName = "girl_half_" + index + "_1";
+                    var headImageName = "girl_icon_" + index;
+
+                    if (m_girlCommonImage.ContainsKey(halfImageName))
                     {
-                        headImagePath = Directory.GetFiles(headImagePath)[0];
+                        girlInfo.halfImage = m_girlCommonImage[halfImageName];
                     }
 
-                    girlInfo.halfImage =
-                        AssetDatabase.LoadAssetAtPath<Texture2D>(halfImagePath);
-                    girlInfo.headImage =
-                        AssetDatabase.LoadAssetAtPath<Texture2D>(headImagePath);
-                    _girlLists.Add(girlInfo);
+                    if (m_girlCommonImage.ContainsKey(headImageName))
+                    {
+                        girlInfo.headImage = m_girlCommonImage[headImageName];
+                    }
+
+                    m_girlLists.Add(girlInfo);
                 }
             }
 
@@ -69,7 +111,7 @@ namespace GirlBoardEditor
         private void BindingGirlList()
         {
             var item = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(PathDefine.EditorGirlItemUxml);
-            var girlList = root.Q<ListView>("content_list");
+            var girlList = Root.Q<ListView>("content_list");
 
             if (girlList == null)
             {
@@ -82,37 +124,28 @@ namespace GirlBoardEditor
                 Debug.Log("列表元素为空");
             }
 
-            // for (int i = 0; i < 10; i++)
-            // {
-            //     var resourceItem = new GirlInfo()
-            //     {
-            //         id = "Girl00" + i,
-            //         describe = "This is girl00" + i
-            //     };
-            //     _girlListItem.Add(resourceItem);
-            // }
-            if (_girlLists != null)
+            if (m_girlLists != null)
             {
-                _girlLists.Clear();
+                m_girlLists.Clear();
             }
 
             LoadGrils();
 
             Func<VisualElement> makeItem = () => item.Instantiate();
-            Action<VisualElement, int> bindItem = (item, index) => BindingGirlList(item, _girlLists[index]);
+            Action<VisualElement, int> bindItem = (item, index) => BindingGirlList(item, m_girlLists[index]);
 
             girlList.fixedItemHeight = 100;
 
             girlList.makeItem = makeItem;
             girlList.bindItem = bindItem;
-            girlList.itemsSource = _girlLists;
+            girlList.itemsSource = m_girlLists;
             girlList.selectionType = SelectionType.Single;
 
             girlList.selectionChanged += (e) =>
             {
                 foreach (var VARIABLE in e)
                 {
-                    if (VARIABLE is GirlInfo girlInfo)
+                    if (VARIABLE is GirlInfoModel girlInfo)
                     {
                         //Debug.Log(girlInfo.id);
                         var _parent = parent as ISelectedGirl;
@@ -123,20 +156,20 @@ namespace GirlBoardEditor
                     }
                 }
             };
-            
+
             girlList.SetSelection(0);
-            
         }
 
-        private void BindingGirlList(VisualElement item, GirlInfo info)
+        private void BindingGirlList(VisualElement item, GirlInfoModel infoModel)
         {
             var image = item.Q<VisualElement>("headImage");
             var girlID = item.Q<Label>("girlID");
             var describe = item.Q<Label>("describe");
 
-            image.style.backgroundImage = new StyleBackground(info.headImage);
-            girlID.text = info.id;
-            describe.text = info.describe;
+            image.style.backgroundImage = new StyleBackground(infoModel.halfImage);
+            //image.style.backgroundImage.value.sprite.
+            girlID.text = infoModel.id;
+            describe.text = infoModel.describe;
         }
     }
 }

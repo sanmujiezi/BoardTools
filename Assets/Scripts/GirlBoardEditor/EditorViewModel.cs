@@ -4,10 +4,10 @@ using UnityEngine.UIElements;
 
 namespace GirlBoardEditor
 {
-    public delegate void DelegateGirlChanged(GirlInfo girlInfo);
+    public delegate void DelegateGirlChanged(GirlInfoModel girlInfoModel);
     public interface ISelectedGirl
     {
-        void OnSelectedGirl(GirlInfo girlInfo);
+        void OnSelectedGirl(GirlInfoModel girlInfoModel);
         void AddListener(DelegateGirlChanged action);
         void RemoveListener(DelegateGirlChanged action);
     }
@@ -19,18 +19,20 @@ namespace GirlBoardEditor
         private GirlDetailViewModel m_GirlDetail;
         private GirlInfoListViewModel m_GirlList;
         
-        private List<GirlInfo> m_GirlInfos = new ();
-        public List<GirlInfo> MGirlInfos => m_GirlInfos;
+        private List<GirlInfoModel> m_GirlInfos = new ();
+        public List<GirlInfoModel> MGirlInfos => m_GirlInfos;
         
-        public EditorViewModel(VisualElement root) : base(root)
+        public EditorViewModel(VisualElement root,BaseModel model) : base(root,model)
         {
-            m_GirlDetail = new GirlDetailViewModel(root,this);
-            m_GirlList = new GirlInfoListViewModel(root,this);
+            BaseModel girlData = new GirlDataModel();
+            BaseModel girlInfo = new GirlInfoModel();
+            m_GirlDetail = new GirlDetailViewModel(root,this,girlData);
+            m_GirlList = new GirlInfoListViewModel(root,this,null);
         }
 
-        public void OnSelectedGirl(GirlInfo girlInfo)
+        public void OnSelectedGirl(GirlInfoModel girlInfoModel)
         {
-            OnSelectGirl?.Invoke(girlInfo);
+            OnSelectGirl?.Invoke(girlInfoModel);
         }
 
         public void AddListener(DelegateGirlChanged action)
