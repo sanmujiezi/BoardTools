@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using GirlBoardEditor;
 using GirlBoardEditor.Model;
 using GirlBoardEditor.Tools;
-using GirlBoardEditor.UICompontent;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;

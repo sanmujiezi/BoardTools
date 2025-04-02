@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using GirlBoardEditor.Model;
 using GirlBoardEditor.Tools;
 using UnityEditor;
@@ -14,7 +15,7 @@ namespace GirlBoardEditor
     public enum DetailState
     {
         CompairBoard,
-        EdiorBoard,
+        EditBoard,
         ChatImage,
         GirlImage
     }
@@ -30,13 +31,15 @@ namespace GirlBoardEditor
         private ObjectField chatImage;
         private ObjectField girlImage;
         private DropdownField selectedState;
-        private ListView list;
+        private ListView listView;
 
-        private GirlDataModel m_GirlDataModel;
+        new private GirlDataModel m_Model;
+        private RightContentRightPrefabViewModel prefabViewModel;
 
-        public GirlDetailViewModel(VisualElement root, BaseViewModel parent,BaseModel model) : base(root,model)
+        public GirlDetailViewModel(VisualElement mRoot, BaseViewModel parent,BaseModel model) : base(mRoot,model)
         {
             this.parent = parent;
+            prefabViewModel = new RightContentRightPrefabViewModel(m_root,m_Model);
             BindingData();
             InitCompontent();
             RefreshView();
@@ -44,14 +47,14 @@ namespace GirlBoardEditor
 
         private void BindingData()
         {
-            detailView = Root.Q<VisualElement>("right_content_right");
-            girlTitle = Root.Q<Label>("right_girlId");
-            boardImage = Root.Q<ObjectField>("right_boardImage_field");
-            boardPrefab = Root.Q<ObjectField>("right_boardPrefab_field");
-            chatImage = Root.Q<ObjectField>("right_girlImage_field");
-            girlImage = Root.Q<ObjectField>("right_chatImage_field");
-            selectedState = Root.Q<DropdownField>("right_content_left_detailState");
-            list = Root.Q<ListView>("right_content_left_list");
+            detailView = m_root.Q<VisualElement>("right_content_right");
+            girlTitle = m_root.Q<Label>("right_girlId");
+            boardImage = m_root.Q<ObjectField>("right_boardImage_field");
+            boardPrefab = m_root.Q<ObjectField>("right_boardPrefab_field");
+            chatImage = m_root.Q<ObjectField>("right_girlImage_field");
+            girlImage = m_root.Q<ObjectField>("right_chatImage_field");
+            selectedState = m_root.Q<DropdownField>("right_content_left_detailState");
+            listView = m_root.Q<ListView>("right_content_left_list");
         }
 
         private void InitCompontent()
@@ -61,7 +64,7 @@ namespace GirlBoardEditor
             {
                 DetailState.ChatImage.ToString(),
                 DetailState.GirlImage.ToString(),
-                DetailState.EdiorBoard.ToString(),
+                DetailState.EditBoard.ToString(),
                 DetailState.CompairBoard.ToString()
             };
             selectedState.choices = choises;
@@ -71,6 +74,10 @@ namespace GirlBoardEditor
             {
                 DebugLogger.Instance.Log(this, $"Enum change {evt.newValue}");
                 selectedState.value = evt.newValue;
+                
+                prefabViewModel.detailState = evt.newValue;
+                
+                RefreshChildView();
             });
 
             var _parent = parent as ISelectedGirl;
@@ -99,14 +106,78 @@ namespace GirlBoardEditor
 
             DebugLogger.Instance.Log(this, $"RefreshView {girlInfoModel.id}");
 
-            if (m_GirlDataModel != null)
+            if (m_Model != null)
             {
-                m_GirlDataModel.ClearData();
+                m_Model.ClearData();
             }
 
-            m_GirlDataModel = LoadGirlDataByInfo(girlInfoModel.path);
-            m_GirlDataModel.id = girlInfoModel.id;
+            m_Model = LoadGirlDataByInfo(girlInfoModel.path);
+            m_Model.id = girlInfoModel.id;
             girlTitle.text = girlInfoModel.id;
+            
+            RefreshChildView();
+        }
+
+        public void RefreshChildView()
+        {
+            listView.Clear();
+            listView.makeItem = null;
+            listView.bindItem = null;
+            listView.itemsSource = null;
+            listView.selectionType = SelectionType.Single;
+            listView.fixedItemHeight = 100;
+
+            switch (Enum.Parse(typeof(DetailState), selectedState.value) )
+            {
+                case DetailState.CompairBoard:
+                    var _item1 = new DetailListItemCompairViewModel(m_root, null,m_Model.boardImage);
+                    listView.makeItem = _item1.MakeItem;
+                    listView.bindItem = _item1.BindItem;
+                    listView.itemsSource = _item1.ItemsResource();
+                    listView.selectionChanged += _item1.SelectedChanged;
+
+                    break;
+                case DetailState.EditBoard:
+                    var _item2 = new DetailListItemPrefabViewModel(m_root, null,m_Model.boardPrefab);
+                    listView.makeItem= _item2.MakeItem;
+                    listView.bindItem= _item2.BindItem;
+                    listView.itemsSource = _item2.ItemsResource();
+                    listView.selectionChanged += _item2.SelectedChanged;
+                    listView.selectionChanged += (e) =>
+                    {
+                        foreach (var VARIABLE in e)
+                        {
+                            if (VARIABLE is GameObject obj)
+                            {
+                                prefabViewModel.editPrefab = obj;
+                            }
+                        }
+                        
+                    };
+                    
+                    break;
+                case DetailState.ChatImage:
+                    var _item3 = new DetailListItemImageViewModel(m_root, null,m_Model.chatImage);
+                    listView.makeItem= _item3.MakeItem;
+                    listView.bindItem= _item3.BindItem;
+                    listView.itemsSource = _item3.ItemsResource();
+                    listView.selectionChanged += _item3.SelectedChanged;
+                    
+                    break;
+                case DetailState.GirlImage:
+                    var _item4 = new DetailListItemImageViewModel(m_root, null,m_Model.girlImage);
+                    listView.makeItem= _item4.MakeItem;
+                    listView.bindItem= _item4.BindItem;
+                    listView.itemsSource = _item4.ItemsResource();
+                    listView.selectionChanged += _item4.SelectedChanged;
+                    
+                    break;
+            }
+            listView.RefreshItems();
+            listView.SetSelection(0);
+
+
+
         }
 
         private GirlDataModel LoadGirlDataByInfo(string path)
@@ -171,5 +242,7 @@ namespace GirlBoardEditor
 
             return girlDataModel;
         }
+        
+        
     }
 }

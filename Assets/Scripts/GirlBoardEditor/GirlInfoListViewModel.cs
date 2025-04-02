@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using GirlBoardEditor.Model;
 using GirlBoardEditor.Tools;
-using GirlBoardEditor.UICompontent;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -23,7 +22,7 @@ namespace GirlBoardEditor
         private Dictionary<string, Texture2D> m_girlCommonImage = new();
         public Dictionary<string, Texture2D> MGirlCommonImage => m_girlCommonImage;
 
-        public GirlInfoListViewModel(VisualElement root, BaseViewModel parent, BaseModel model) : base(root, model)
+        public GirlInfoListViewModel(VisualElement mRoot, BaseViewModel parent, BaseModel model) : base(mRoot, model)
         {
             this.parent = parent;
             LoadGrils();
@@ -111,7 +110,7 @@ namespace GirlBoardEditor
         private void BindingGirlList()
         {
             var item = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(PathDefine.EditorGirlItemUxml);
-            var girlList = Root.Q<ListView>("content_list");
+            var girlList = m_root.Q<ListView>("content_list");
 
             if (girlList == null)
             {

@@ -6,12 +6,12 @@ namespace GirlBoardEditor
 {
     public abstract class BaseViewModel : ILifecycle
     {
-        protected VisualElement Root;
+        protected VisualElement m_root;
         protected BaseModel m_Model;
        
-        public BaseViewModel(VisualElement root,BaseModel model)
+        public BaseViewModel(VisualElement mRoot,BaseModel model)
         {
-            this.Root = root;
+            this.m_root = mRoot;
             this.m_Model = model;
             GlobalEventer.Instance.OnWindowEnable += OnEnable;
             GlobalEventer.Instance.OnWindowDisable += OnDisable;

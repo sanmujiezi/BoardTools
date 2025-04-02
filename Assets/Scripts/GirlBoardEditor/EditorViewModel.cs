@@ -22,12 +22,12 @@ namespace GirlBoardEditor
         private List<GirlInfoModel> m_GirlInfos = new ();
         public List<GirlInfoModel> MGirlInfos => m_GirlInfos;
         
-        public EditorViewModel(VisualElement root,BaseModel model) : base(root,model)
+        public EditorViewModel(VisualElement mRoot,BaseModel model) : base(mRoot,model)
         {
             BaseModel girlData = new GirlDataModel();
             BaseModel girlInfo = new GirlInfoModel();
-            m_GirlDetail = new GirlDetailViewModel(root,this,girlData);
-            m_GirlList = new GirlInfoListViewModel(root,this,null);
+            m_GirlDetail = new GirlDetailViewModel(mRoot,this,girlData);
+            m_GirlList = new GirlInfoListViewModel(mRoot,this,null);
         }
 
         public void OnSelectedGirl(GirlInfoModel girlInfoModel)

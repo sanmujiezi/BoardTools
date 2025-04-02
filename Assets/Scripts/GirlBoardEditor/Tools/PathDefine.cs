@@ -21,6 +21,13 @@ namespace GirlBoardEditor.Tools
         public static string EditorMainUxml = "Assets/Scripts/GirlBoardEditor/UI/UIToolkitTest.uxml";
         public static string EditorMainUss = "Assets/Scripts/GirlBoardEditor/UI/UIToolkitTest.uss";
         public static string EditorGirlItemUxml = "Assets/Scripts/GirlBoardEditor/UI/LeftContentListItem.uxml";
-        
+
+        public static string DetailListItemCompairViewUxml =
+            "Assets/Scripts/GirlBoardEditor/UI/DetailListItemCompairView.uxml";
+        public static string DetailListItemPrefabViewUxml =
+            "Assets/Scripts/GirlBoardEditor/UI/DetailListItemPrefabView.uxml";
+        public static string DetailListItemImageViewUxml =
+            "Assets/Scripts/GirlBoardEditor/UI/DetailListItemImageView.uxml";
+
     }
 }

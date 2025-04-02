@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; overflow: hidden; align-items: center;">
+        <ui:VisualElement name="mainBoard" style="flex-grow: 0; flex-shrink: 0; width: 80px; background-color: rgb(209, 209, 209); height: 80px;" />
+        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 10px;" />
+        <ui:VisualElement name="fgBoard" style="flex-grow: 0; flex-shrink: 0; width: 80px; background-color: rgb(209, 209, 209); height: 80px;" />
+        <ui:VisualElement style="flex-grow: 1; align-items: flex-start; justify-content: center; margin-left: 10px;">
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="mainBoardText" style="font-size: 18px; flex-grow: 0; flex-direction: row; flex-shrink: 0; justify-content: space-around; align-items: stretch; align-self: auto; display: flex; visibility: visible; color: rgb(247, 247, 247);" />
+            <ui:VisualElement name="VisualElement" style="flex-grow: 0; flex-shrink: 0; height: 10px; flex-direction: column; display: flex; visibility: visible;" />
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="fgBoardText" style="font-size: 18px; display: flex; color: rgb(247, 247, 247);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
